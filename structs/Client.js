@@ -1,10 +1,10 @@
 const Trello = require('trello-events')
-const { webhooks, conf } = require('../config.json')
+const { webhooks } = require('../config.json')
 const Handler = require('./Handler')
 const req = require('@aero/centra')
 module.exports = class Client extends Trello {
-    constructor(conf) {
-        super(conf);
+    constructor() {
+        super();
         this.routes = []
         this.handler = new Handler(this)
     }

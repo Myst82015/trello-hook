@@ -1,3 +1,4 @@
 const Client = require(`./structs/Client`)
-const Bot = new Client()
+const { conf } = require(`./config`)
+const Bot = new Client(conf)
 Bot.start()
