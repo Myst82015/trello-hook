@@ -25,7 +25,6 @@ module.exports = class Checker {
         const boardActions = resp.reverse();
         let actionId;
         for (const ix in boardActions) {
-            //skip seen events
             actionId = parseInt(boardActions[ix].id, 16);
             if (actionId <= this.minId) {
                 continue;
