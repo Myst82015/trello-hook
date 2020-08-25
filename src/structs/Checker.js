@@ -1,4 +1,4 @@
-const Trello = require('./bases/Trello')
+const Trello = require(`./bases/Trello`)
 module.exports = class Checker {
     constructor(client) {
         this.client = client;
@@ -36,7 +36,7 @@ module.exports = class Checker {
             }
     
             this.minId = Math.max(this.minId, actionId);
-            this.client.emit('maxId', this.minId);
+            this.client.emit(`maxId`, this.minId);
         
         
     }

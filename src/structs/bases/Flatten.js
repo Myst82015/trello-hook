@@ -21,10 +21,10 @@
  * @returns {Object}
  */
 function flatten(obj, ...props) {
-	const isObject = d => typeof d === 'object' && d !== null;
+	const isObject = d => typeof d === `object` && d !== null;
 	if (!isObject(obj)) return obj;
 
-	props = Object.assign(...Object.keys(obj).filter(k => !k.startsWith('_')).map(k => ({ [k]: true })), ...props);
+	props = Object.assign(...Object.keys(obj).filter(k => !k.startsWith(`_`)).map(k => ({ [k]: true })), ...props);
 
 	const out = {};
 
@@ -34,15 +34,15 @@ function flatten(obj, ...props) {
 
 		const element = obj[prop];
 		const elemIsObj = isObject(element);
-		const valueOf = elemIsObj && typeof element.valueOf === 'function' ? element.valueOf() : null;
+		const valueOf = elemIsObj && typeof element.valueOf === `function` ? element.valueOf() : null;
 
-		// If it's a collection, make the array of keys
-		if (element instanceof require('../structures/bases/Collection')) out[newProp] = Array.from(element.keys());
-		// If it's an array, flatten each element
+		// If it`s a collection, make the array of keys
+		if (element instanceof require(`../structures/bases/Collection`)) out[newProp] = Array.from(element.keys());
+		// If it`s an array, flatten each element
 		else if (Array.isArray(element)) out[newProp] = element.map(e => this.constructor.flatten(e));
-		// If it's an object with a primitive `valueOf`, use that value
+		// If it`s an object with a primitive `valueOf`, use that value
 		else if (valueOf && !isObject(valueOf)) out[newProp] = valueOf;
-		// If it's a primitive
+		// If it`s a primitive
 		else if (!elemIsObj) out[newProp] = element;
 	}
 

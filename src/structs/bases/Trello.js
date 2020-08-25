@@ -1,4 +1,4 @@
-const req = require('@aero/centra')
+const req = require(`@aero/centra`)
 
 module.exports = class Trello {
     constructor(key, token) {

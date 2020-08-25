@@ -5,8 +5,7 @@ class QueueItem {
     }
   }
   
-  const _ = Symbol.for('_');
-  const flag = Symbol.for('@iter-tools/queue');
+  const _ = Symbol.for(`_`);
   
   class Queue {
     constructor(values) {
@@ -18,14 +17,6 @@ class QueueItem {
           this.push(value);
         }
       }
-    }
-  
-    static isQueue(inst) {
-      return inst != null && inst[flag];
-    }
-  
-    get [flag]() {
-      return true;
     }
   
     get size() {

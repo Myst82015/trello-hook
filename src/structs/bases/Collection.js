@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const flatten = require('./Flatten');
+const flatten = require(`./Flatten`);
 
 /**
  * A Map with additional utility methods. This is used throughout discord.js rather than Arrays for anything that has
@@ -31,7 +31,7 @@ class Collection extends Map {
 		 * @type {?Array}
 		 * @private
 		 */
-		Object.defineProperty(this, '_array', { value: null, writable: true, configurable: true });
+		Object.defineProperty(this, `_array`, { value: null, writable: true, configurable: true });
 
 		/**
 		 * Cached array for the `keyArray()` method - will be reset to `null` whenever `set()` or `delete()` are called
@@ -39,7 +39,7 @@ class Collection extends Map {
 		 * @type {?Array}
 		 * @private
 		 */
-		Object.defineProperty(this, '_keyArray', { value: null, writable: true, configurable: true });
+		Object.defineProperty(this, `_keyArray`, { value: null, writable: true, configurable: true });
 	}
 
 	set(key, val) {
@@ -57,7 +57,7 @@ class Collection extends Map {
 	/**
 	 * Creates an ordered array of the values of this collection, and caches it internally. The array will only be
 	 * reconstructed if an item is added to or removed from the collection, or if you change the length of the array
-	 * itself. If you don't want this caching behavior, use `[...collection.values()]` or
+	 * itself. If you don`t want this caching behavior, use `[...collection.values()]` or
 	 * `Array.from(collection.values())` instead.
 	 * @returns {Array}
 	 */
@@ -69,7 +69,7 @@ class Collection extends Map {
 	/**
 	 * Creates an ordered array of the keys of this collection, and caches it internally. The array will only be
 	 * reconstructed if an item is added to or removed from the collection, or if you change the length of the array
-	 * itself. If you don't want this caching behavior, use `[...collection.keys()]` or
+	 * itself. If you don`t want this caching behavior, use `[...collection.keys()]` or
 	 * `Array.from(collection.keys())` instead.
 	 * @returns {Array}
 	 */
@@ -85,7 +85,7 @@ class Collection extends Map {
 	 * amount is negative
 	 */
 	first(amount) {
-		if (typeof amount === 'undefined') return this.values().next().value;
+		if (typeof amount === `undefined`) return this.values().next().value;
 		if (amount < 0) return this.last(amount * -1);
 		amount = Math.min(this.size, amount);
 		const arr = new Array(amount);
@@ -101,7 +101,7 @@ class Collection extends Map {
 	 * amount is negative
 	 */
 	firstKey(amount) {
-		if (typeof amount === 'undefined') return this.keys().next().value;
+		if (typeof amount === `undefined`) return this.keys().next().value;
 		if (amount < 0) return this.lastKey(amount * -1);
 		amount = Math.min(this.size, amount);
 		const arr = new Array(amount);
@@ -119,7 +119,7 @@ class Collection extends Map {
 	 */
 	last(amount) {
 		const arr = this.array();
-		if (typeof amount === 'undefined') return arr[arr.length - 1];
+		if (typeof amount === `undefined`) return arr[arr.length - 1];
 		if (amount < 0) return this.first(amount * -1);
 		if (!amount) return [];
 		return arr.slice(-amount);
@@ -134,7 +134,7 @@ class Collection extends Map {
 	 */
 	lastKey(amount) {
 		const arr = this.keyArray();
-		if (typeof amount === 'undefined') return arr[arr.length - 1];
+		if (typeof amount === `undefined`) return arr[arr.length - 1];
 		if (amount < 0) return this.firstKey(amount * -1);
 		if (!amount) return [];
 		return arr.slice(-amount);
@@ -148,7 +148,7 @@ class Collection extends Map {
 	 */
 	random(amount) {
 		let arr = this.array();
-		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
+		if (typeof amount === `undefined`) return arr[Math.floor(Math.random() * arr.length)];
 		if (arr.length === 0 || !amount) return [];
 		const rand = new Array(amount);
 		arr = arr.slice();
@@ -164,7 +164,7 @@ class Collection extends Map {
 	 */
 	randomKey(amount) {
 		let arr = this.keyArray();
-		if (typeof amount === 'undefined') return arr[Math.floor(Math.random() * arr.length)];
+		if (typeof amount === `undefined`) return arr[Math.floor(Math.random() * arr.length)];
 		if (arr.length === 0 || !amount) return [];
 		const rand = new Array(amount);
 		arr = arr.slice();
@@ -181,10 +181,10 @@ class Collection extends Map {
 	 * @param {Function} fn The function to test with (should return boolean)
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {*}
-	 * @example collection.find(user => user.username === 'Bob');
+	 * @example collection.find(user => user.username === `Bob`);
 	 */
 	find(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) return val;
 		}
@@ -199,11 +199,11 @@ class Collection extends Map {
 	 * @param {Function} fn The function to test with (should return boolean)
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {*}
-	 * @example collection.findKey(user => user.username === 'Bob');
+	 * @example collection.findKey(user => user.username === `Bob`);
 	 */
 	/* eslint-enable max-len */
 	findKey(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) return key;
 		}
@@ -217,7 +217,7 @@ class Collection extends Map {
 	 * @returns {number} The number of removed entries
 	 */
 	sweep(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		const previousSize = this.size;
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) this.delete(key);
@@ -232,10 +232,10 @@ class Collection extends Map {
 	 * @param {Function} fn The function to test with (should return boolean)
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {Collection}
-	 * @example collection.filter(user => user.username === 'Bob');
+	 * @example collection.filter(user => user.username === `Bob`);
 	 */
 	filter(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		const results = new Collection();
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) results.set(key, val);
@@ -252,7 +252,7 @@ class Collection extends Map {
 	 * @example const [big, small] = collection.partition(guild => guild.memberCount > 250);
 	 */
 	partition(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		const results = [new Collection(), new Collection()];
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) {
@@ -273,7 +273,7 @@ class Collection extends Map {
 	 * @example collection.map(user => user.tag);
 	 */
 	map(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		const arr = new Array(this.size);
 		let i = 0;
 		for (const [key, val] of this) arr[i++] = fn(val, key, this);
@@ -286,10 +286,10 @@ class Collection extends Map {
 	 * @param {Function} fn Function used to test (should return a boolean)
 	 * @param {*} [thisArg] Value to use as `this` when executing function
 	 * @returns {boolean}
-	 * @example collection.some(user => user.discriminator === '0000');
+	 * @example collection.some(user => user.discriminator === `0000`);
 	 */
 	some(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
 			if (fn(val, key, this)) return true;
 		}
@@ -305,7 +305,7 @@ class Collection extends Map {
 	 * @example collection.every(user => !user.bot);
 	 */
 	every(fn, thisArg) {
-		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		if (typeof thisArg !== `undefined`) fn = fn.bind(thisArg);
 		for (const [key, val] of this) {
 			if (!fn(val, key, this)) return false;
 		}
@@ -323,7 +323,7 @@ class Collection extends Map {
 	 */
 	reduce(fn, initialValue) {
 		let accumulator;
-		if (typeof initialValue !== 'undefined') {
+		if (typeof initialValue !== `undefined`) {
 			accumulator = initialValue;
 			for (const [key, val] of this) accumulator = fn(accumulator, val, key, this);
 		} else {
@@ -414,7 +414,7 @@ class Collection extends Map {
 	 * The sort() method sorts the elements of a collection and returns it.
 	 * The sort is not necessarily stable. The default sort order is according to string Unicode code points.
 	 * @param {Function} [compareFunction] Specifies a function that defines the sort order.
-	 * If omitted, the collection is sorted according to each character's Unicode code point value,
+	 * If omitted, the collection is sorted according to each character`s Unicode code point value,
 	 * according to the string conversion of each element.
 	 * @returns {Collection}
 	 * @example collection.sort((userA, userB) => userA.createdTimestamp - userB.createdTimestamp);
@@ -424,7 +424,7 @@ class Collection extends Map {
 	}
 
 	toJSON() {
-		return this.map(e => typeof e.toJSON === 'function' ? e.toJSON() : flatten(e));
+		return this.map(e => typeof e.toJSON === `function` ? e.toJSON() : flatten(e));
 	}
 }
 

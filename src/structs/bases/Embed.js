@@ -57,7 +57,7 @@ class Embed {
         return this.timestamp ? new Date(this.timestamp) : null;
     }
     get hexColor() {
-        return this.color ? `#${this.color.toString(16).padStart(6, '0')}` : null;
+        return this.color ? `#${this.color.toString(16).padStart(6, `0`)}` : null;
     }
     addField(name, value, inline) {
         this.fields.push(Embed.checkField(name, value, inline));
@@ -70,7 +70,7 @@ class Embed {
         return this;
     }
     addBlankField(inline) {
-        return this.addField('\u200B', '\u200B', inline);
+        return this.addField(`\u200B`, `\u200B`, inline);
     }
     spliceField(index, deleteCount, name, value, inline) {
         if (name && value)
@@ -90,7 +90,7 @@ class Embed {
         return this;
     }
     setColor(color) {
-        this.color = parseInt(color.replace('#', ''), 16);
+        this.color = parseInt(color.replace(`#`, ``), 16);
         return this;
     }
     setFooter(text, iconURL) {
@@ -140,10 +140,10 @@ class Embed {
     }
     static checkField(name, value, inline = false) {
         name = String(name);
-        if (typeof name !== 'string')
+        if (typeof name !== `string`)
             throw new TypeError(`Embed field name must be a string or have a toString() method, received: ${typeof name}`);
         value = String(value);
-        if (typeof value !== 'string')
+        if (typeof value !== `string`)
             throw new TypeError(`Embed field value must be a string or have a toString() method: ${typeof value}`);
         return { name, value, inline };
     }

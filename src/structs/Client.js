@@ -1,10 +1,10 @@
-const { EventEmitter } = require('events')
-const { webhooks } = require('../config.json')
-const Queue = require('./bases/Queue')
-const Handler = require('./Handler')
-const req = require('@aero/centra')
+const { EventEmitter } = require(`events`)
+const { webhooks } = require(`../config.json`)
+const Queue = require(`./bases/Queue`)
+const Handler = require(`./Handler`)
+const req = require(`@aero/centra`)
 const { Logger } = require("@ayanaware/logger");
-const Checker = require('./Checker')
+const Checker = require(`./Checker`)
 require("./logger/Logger");
 module.exports = class Client extends EventEmitter {
     constructor(options) {
@@ -12,7 +12,7 @@ module.exports = class Client extends EventEmitter {
         this.options = options;
         this.hooks = webhooks;
         this.queue = new Queue()
-        this.logger = Logger.get('Client');
+        this.logger = Logger.get(`Client`);
         this.handler = new Handler(this)
         this.checker = new Checker(this)
     }

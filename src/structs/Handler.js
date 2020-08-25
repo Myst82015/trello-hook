@@ -1,6 +1,6 @@
-const { join } = require('path');
-const { promises: { lstat, readdir } } = require('fs');
-const Collection = require('./bases/Collection');
+const { join } = require(`path`);
+const { promises: { lstat, readdir } } = require(`fs`);
+const Collection = require(`./bases/Collection`);
 
 class Handler {
   constructor(client) {
@@ -9,7 +9,7 @@ class Handler {
   }
 
   registerEvent(event) {
-    if (typeof event === 'function') event = new event(this.client);
+    if (typeof event === `function`) event = new event(this.client);
 
     this.events.set(event.name, event);
 
@@ -25,7 +25,7 @@ class Handler {
 
   async registerEventsIn(path) {
     const files = await this.constructor.walk(`${path}`, {
-      filter: (stats, file) => stats.isFile() && file.endsWith('.js')
+      filter: (stats, file) => stats.isFile() && file.endsWith(`.js`)
     });
     const events = [];
     for (let event of files) {
@@ -39,7 +39,7 @@ class Handler {
   static async walk(dir, options = {}, results = new Map(), level = -1) {
     const stats = await lstat(dir);
     if (!options.filter || options.filter(stats, dir)) results.set(dir, stats);
-    if (stats.isDirectory() && (typeof options.depthLimit === 'undefined' || level < options.depthLimit))
+    if (stats.isDirectory() && (typeof options.depthLimit === `undefined` || level < options.depthLimit))
       await Promise.all((await readdir(dir)).map((part) => Handler.walk(join(dir, part), options, results, ++level)));
     return results;
   }
