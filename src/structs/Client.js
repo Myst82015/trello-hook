@@ -30,7 +30,7 @@ module.exports = class Client extends EventEmitter {
     }
     stop() {
         if (this.interval) this.interval.unref();
-        this.client.cheker.stop()
+        this.client.checker.stop()
     }
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
