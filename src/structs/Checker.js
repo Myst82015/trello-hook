@@ -4,6 +4,7 @@ module.exports = class Checker {
         this.client = client;
         this.options = client.options;
         this.minId = 0;
+        this.latestActivityID = 0;
         this.trello = new Trello(client.options.trello.key, client.options.trello.token)
     }
     async start() {

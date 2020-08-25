@@ -1,4 +1,4 @@
-const { join, dirname, sep, resolve } = require('path');
+const { join } = require('path');
 const { promises: { lstat, readdir } } = require('fs');
 const Collection = require('./bases/Collection');
 
@@ -44,7 +44,7 @@ class Handler {
     return results;
   }
   async start() {
-    await this.registerEventsIn(`${process.cwd()}/listeners`)
+    await this.registerEventsIn(`${process.cwd()}/src/listeners`)
     return true;
   }
 }
