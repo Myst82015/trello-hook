@@ -1,0 +1,7 @@
+version: '2'
+services:
+  hook:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    restart: unless-stopped
