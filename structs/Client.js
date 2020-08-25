@@ -1,27 +1,51 @@
-const Trello = require('trello-events')
+const { EventEmitter } = require('events')
 const { webhooks } = require('../config.json')
+const { RateLimitManager } = require(`@klasa/ratelimits`)
 const Handler = require('./Handler')
 const req = require('@aero/centra')
-module.exports = class Client extends Trello {
-    constructor() {
-        super();
-        this.routes = []
+const { Logger } = require("@ayanaware/logger");
+const Checker = require('./Checker')
+require("./logger/Logger");
+module.exports = class Client extends EventEmitter {
+    constructor(options) {
+        super(options);
+        this.options = options;
+        this.hooks = webhooks;
+        this.ratelimits = new RateLimitManager(2000, 3)
+        this.logger = Logger.get('Client');
         this.handler = new Handler(this)
+        this.checker = new Checker(this)
     }
     async start() {
-        for (const url of webhooks) {
-            const hook = this.parseWebhook(url)
-            this.routes.push({ id: hook.id, token: hook.token, url: url })
-        }
+        this.logger.info(`starting...`)
         await this.handler.start()
+        await this.checker.start()
+        this.logger.info(`started!`)
     }
-    parseWebhook(text) {
-        const m = text.match(/^https:\/\/(?:(?:canary|ptb).)?discordapp.com\/api\/webhooks\/(\d+)\/([\w-]+)\/?$/);
-        if (!m) return null;
-        return { id: m[1], token: m[2] };
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
-    async post(webhookID, webhookToken, data) {
-        const res = await req(`https://discord.com/api/webhooks/${webhookID}/${webhookToken}?wait=true`, `POST`).body(data).send();
+    async post(data) {
+
+        let res = []
+        for (const url of this.hooks) {
+            if (this.ratelimits.time) {
+                const ratelimit = this.ratelimits.acquire(url);
+                if (ratelimit.limited) {
+                    await this.sleep(ratelimit.remainingTime)
+                    await this.post(data)
+                    return;
+                }
+
+                const token = ratelimit.take();
+            }
+            const resp = await req(url, `POST`).body(data).json()
+            if (resp.retry_after) {
+                await this.sleep(resp.retry_after)
+                await this.post(data)
+            }
+            res.push(resp)
+        }
         return res;
     }
 }

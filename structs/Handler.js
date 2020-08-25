@@ -24,12 +24,12 @@ class Handler {
   }
 
   async registerEventsIn(path) {
-    const files = await this.constructor.walk(`${dirname(process.cwd())}${sep}${path}`, {
+    const files = await this.constructor.walk(`${path}`, {
       filter: (stats, file) => stats.isFile() && file.endsWith('.js')
     });
     const events = [];
     for (let event of files) {
-      event = require(`${process.cwd()}/${event[0]}`);
+      event = require(`${event[0]}`);
       events.push(event);
     }
 
@@ -37,7 +37,6 @@ class Handler {
   }
 
   static async walk(dir, options = {}, results = new Map(), level = -1) {
-    dir = resolve(dir);
     const stats = await lstat(dir);
     if (!options.filter || options.filter(stats, dir)) results.set(dir, stats);
     if (stats.isDirectory() && (typeof options.depthLimit === 'undefined' || level < options.depthLimit))

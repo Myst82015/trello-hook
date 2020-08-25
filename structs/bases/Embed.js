@@ -60,7 +60,7 @@ class EmbedBuilder {
         this.image = { url };
         return this;
     }
-    setTimestamp(t = new Date()) {
+    setTimestamp(t = new Date().toISOString()) {
         this.timestamp = t;
         return this;
     }
@@ -93,7 +93,7 @@ class EmbedBuilder {
                 : undefined,
             color: this.color,
             url: this.url ? this.url : undefined,
-            timestamp: this.timestamp ? this.timestamp.toISOString() : undefined,
+            timestamp: this.timestamp ? this.timestamp : undefined,
         };
     }
 }

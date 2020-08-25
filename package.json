@@ -19,6 +19,13 @@
   "homepage": "https://github.com/tbnritzdoge/trello-hook#readme",
   "dependencies": {
     "@aero/centra": "^1.0.6",
+    "@ayanaware/logger": "^2.2.1",
+    "@klasa/ratelimits": "^0.1.0",
+    "@klasa/rest": "^0.5.4",
+    "chalk": "^4.1.0",
+    "fecha": "^4.2.0",
+    "node-trello": "^1.3.0",
+    "request": "^2.88.2",
     "trello-events": "^0.1.6"
   }
 }
