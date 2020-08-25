@@ -1,5 +1,5 @@
-const Listener = require(`../structs/bases/Listener`)
-const Embed = require(`../structs/bases/Embed`)
+const Listener = require(`../../structs/bases/Listener`)
+const Embed = require(`../../structs/bases/Embed`)
 module.exports = class deleteAttachmentFromCard extends Listener {
     constructor(...args) {
         super(...args, { name: `deleteAttachmentFromCard`, enabled: true })

@@ -1,5 +1,5 @@
-const Listener = require(`../structs/bases/Listener`)
-const Embed = require(`../structs/bases/Embed`)
+const Listener = require(`../../structs/bases/Listener`)
+const Embed = require(`../../structs/bases/Embed`)
 module.exports = class addAttachmentToCard extends Listener {
     constructor(...args) {
         super(...args, { name: `addAttachmentToCard`, enabled: true })

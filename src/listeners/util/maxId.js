@@ -1,4 +1,4 @@
-const Listener = require(`../structs/bases/Listener`)
+const Listener = require(`../../structs/bases/Listener`)
 module.exports = class maxId extends Listener {
     constructor(...args) {
         super(...args, { name: `maxId`, enabled: true })

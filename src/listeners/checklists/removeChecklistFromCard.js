@@ -1,5 +1,5 @@
-const Listener = require(`../structs/bases/Listener`)
-const Embed = require(`../structs/bases/Embed`)
+const Listener = require(`../../structs/bases/Listener`)
+const Embed = require(`../../structs/bases/Embed`)
 module.exports = class removeChecklistFromCard extends Listener {
     constructor(...args) {
         super(...args, { name: `removeChecklistFromCard`, enabled: true })
