@@ -13,3 +13,5 @@ The config goes in /src/config.json
     }
 }
 ```
+
+> I also provided a Dockerfile and a docker-compose for those of you(like me) who only run stuff in docker
