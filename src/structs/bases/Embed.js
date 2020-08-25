@@ -64,7 +64,7 @@ class Embed {
         return this;
     }
     addFields(fields) {
-        for(const field of fields) {
+        for (const field of fields) {
             this.fields.push(Embed.checkField(field.name, field.value, field?.inline));
         }
         return this;
@@ -150,7 +150,7 @@ class Embed {
     attachFiles(files) {
         this.files = this.files.concat(files);
         return this;
-      }
+    }
 }
 exports.Embed = Embed;
 module.exports = Embed;

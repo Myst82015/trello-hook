@@ -13,7 +13,7 @@ class Handler {
 
     this.events.set(event.name, event);
 
-     if (event.enabled) this.client.on(event.name, event.run.bind(event));
+    if (event.enabled) this.client.on(event.name, event.run.bind(event));
   }
 
   registerEvents(events) {
