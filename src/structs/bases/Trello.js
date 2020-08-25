@@ -9,6 +9,5 @@ module.exports = class Trello {
 
     get(uri) {
         return req(`${this.host}${uri}?key=${this.key}&token=${this.token}`).json()
-        
     };
 }
